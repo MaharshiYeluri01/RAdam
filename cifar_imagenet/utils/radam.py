@@ -169,7 +169,7 @@ class DRAdam(Optimizer):
                         diff = torch.abs(previous_grad - p_data_fp32)
                         print(diff.shape)
                         dfc = torch.div(1.0, (1.0 + torch.exp(-diff)))
-                        print('dfc',dfc.shape,'m',exp_avg,shape,'w',p_data_fp32.shape)
+                        print('dfc',dfc.shape,'m',exp_avg.shape,'w',p_data_fp32.shape)
                         denom = exp_avg_sq.sqrt().add_(group['eps'])
                         p_data_fp32.addcdiv_(-step_size, exp_avg*dfc, denom)
                     else:
