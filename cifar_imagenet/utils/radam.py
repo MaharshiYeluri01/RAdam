@@ -147,10 +147,11 @@ class DRAdam(Optimizer):
 #                         state['previous_grad'] = p_data_fp32.clone()
                         rt = math.sqrt( (N_sma - 4) / (N_sma_max - 4) * (N_sma - 2) / N_sma * N_sma_max / (N_sma_max - 2)) 
                         lt=group['lr'] * math.sqrt((1 - beta2_t)/(1 - beta1 ** state['step']))
-                       
+                        exp_avg1=exp_avg
                         if rt>=0.5:
                             diff = torch.abs(previous_grad - p_data_fp32)
                             dfc = torch.div(1.0, (1.0 + torch.exp(-diff)))
+                            exp_avg1 = exp_avg * dfc
                         step_size=rt*lt
                         
                         
@@ -164,13 +165,11 @@ class DRAdam(Optimizer):
 
                 # more conservative since it's an approximated value
                 if N_sma >= 5: 
-                    try:
-                        denom = exp_avg_sq.sqrt().add_(group['eps'])
-                        exp_avg1 = exp_avg * dfc
-                        p_data_fp32.addcdiv_(-step_size, exp_avg1, denom)
-                    except:
-                        import pdb
-                        pdb.set_trace()
+
+                    denom = exp_avg_sq.sqrt().add_(group['eps'])
+                     
+                    p_data_fp32.addcdiv_(-step_size, exp_avg1, denom)
+
                 else:
                     p_data_fp32.add_(-step_size, exp_avg)
 
