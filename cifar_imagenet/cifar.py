@@ -49,7 +49,7 @@ parser.add_argument('--train-batch', default=128, type=int, metavar='N',
                     help='train batchsize')
 parser.add_argument('--test-batch', default=100, type=int, metavar='N',
                     help='test batchsize')
-parser.add_argument('--optimizer', default='sgd', type=str, choices=['adamw', 'radam','dradam' 'radam4s', 'sgd'])
+parser.add_argument('--optimizer', default='sgd', type=str, choices=['adamw', 'radam','dradam' ,'radam4s', 'sgd'])
 parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
                     metavar='LR', help='initial learning rate')
 parser.add_argument('--beta1', default=0.9, type=float,
