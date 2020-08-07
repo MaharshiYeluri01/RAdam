@@ -21,8 +21,7 @@ import torchvision.datasets as datasets
 import models.cifar as models
 
 from utils import Bar, Logger, AverageMeter, accuracy, mkdir_p, savefig
-from utils.radam import RAdam, RAdam_4step, AdamW
-from utils.dradam import DRAdam
+from utils.radam import RAdam, DRAdam,RAdam_4step, AdamW
 
 
 # from tensorboardX import SummaryWriter
