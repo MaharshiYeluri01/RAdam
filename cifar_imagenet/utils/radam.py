@@ -148,11 +148,12 @@ class DRAdam(Optimizer):
                         rt = math.sqrt( (N_sma - 4) / (N_sma_max - 4) * (N_sma - 2) / N_sma * N_sma_max / (N_sma_max - 2)) 
                         lt=group['lr'] * math.sqrt((1 - beta2_t)/(1 - beta1 ** state['step']))
                         dfc=1
-                        if rt>=0.59:
+                        if rt>=0.5:
                             diff = torch.abs(previous_grad - p_data_fp32)
                             dfc = torch.div(1.0, (1.0 + torch.exp(-diff)))
-                        if state['step']%200==0:print(' | RT',round(rt,3),' | DFC',round(dfc,3),' | Step',state['step'])   
                         step_size=rt*lt*dfc
+                        if state['step']%200==0:print(' | RT',round(rt,3),' | DFC',round(dfc,3),' | LT',lt' | Step',state['step'],'| step_size',step_size)   
+                        
                         state['previous_grad'] = p_data_fp32.clone()
                     else:
                         step_size = group['lr'] / (1 - beta1 ** state['step'])
