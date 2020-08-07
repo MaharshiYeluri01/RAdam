@@ -22,7 +22,7 @@ import models.cifar as models
 
 from utils import Bar, Logger, AverageMeter, accuracy, mkdir_p, savefig
 from utils.radam import RAdam, RAdam_4step, AdamW
-from utils.radam import DRAdam
+from utils.dradam import DRAdam
 
 
 # from tensorboardX import SummaryWriter
