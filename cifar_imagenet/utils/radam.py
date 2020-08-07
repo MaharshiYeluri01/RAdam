@@ -152,7 +152,7 @@ class DRAdam(Optimizer):
                             diff = torch.abs(previous_grad - p_data_fp32)
                             dfc = torch.div(1.0, (1.0 + torch.exp(-diff)))
                         step_size=rt*lt*dfc
-                        if state['step']%200==0:print(' | RT',round(rt,3),' | DFC',round(dfc,3),' | LT',lt' | Step',state['step'],'| step_size',step_size)   
+                        if state['step']%200==0:print(' | RT',round(rt,3),' | DFC',round(dfc,3),' | LT',lt,' | Step',state['step'],'v| step_size',step_size)   
                         
                         state['previous_grad'] = p_data_fp32.clone()
                     else:
