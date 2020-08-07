@@ -167,7 +167,7 @@ class DRAdam(Optimizer):
                 if N_sma >= 5: 
                     try:
                         denom = exp_avg_sq.sqrt().add_(group['eps'])
-                        p_data_fp32.addcdiv_(-step_size, exp_avg*diff, denom)
+                        p_data_fp32.addcdiv_(-step_size, exp_avg*dfc, denom)
                     except:
                         import pdb
                         pdb.set_trace()
