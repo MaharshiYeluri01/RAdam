@@ -163,9 +163,13 @@ class DRAdam(Optimizer):
                     p_data_fp32.add_(-group['weight_decay'] * group['lr'], p_data_fp32)
 
                 # more conservative since it's an approximated value
-                if N_sma >= 5:                    
-                    denom = exp_avg_sq.sqrt().add_(group['eps'])
-                    p_data_fp32.addcdiv_(-step_size, exp_avg, denom)
+                if N_sma >= 5: 
+                    try:
+                        denom = exp_avg_sq.sqrt().add_(group['eps'])
+                        p_data_fp32.addcdiv_(-step_size, exp_avg, denom)
+                    except:
+                        import pdb
+                        pdb.set_trace()
                 else:
                     p_data_fp32.add_(-step_size, exp_avg)
 
