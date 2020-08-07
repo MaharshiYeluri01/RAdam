@@ -151,7 +151,7 @@ class DRAdam(Optimizer):
                         if rt>=0.5:
                             diff = torch.abs(previous_grad - p_data_fp32)
                             dfc = torch.div(1.0, (1.0 + torch.exp(-diff)))
-                            exp_avg1 = exp_avg * dfc
+                            
                         step_size=rt*lt
                         
                         
@@ -167,7 +167,7 @@ class DRAdam(Optimizer):
                 if N_sma >= 5: 
                     try:
                         denom = exp_avg_sq.sqrt().add_(group['eps'])
-                        p_data_fp32.addcdiv_(-step_size, exp_avg, denom)
+                        p_data_fp32.addcdiv_(-step_size, exp_avg*diff, denom)
                     except:
                         import pdb
                         pdb.set_trace()
