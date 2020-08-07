@@ -145,7 +145,7 @@ class DRAdam(Optimizer):
 #                         if state['step']%100==0:print('RT',rt,'DFC',dfc)   
 #                         step_size=rt*lt*dfc
 #                         state['previous_grad'] = p_data_fp32.clone()
-                        rt = math.sqrt( (N_sma - 4) / (N_sma_max - 4) * (N_sma - 2) / N_sma * N_sma_max / (N_sma_max - 2)) )
+                        rt = math.sqrt( (N_sma - 4) / (N_sma_max - 4) * (N_sma - 2) / N_sma * N_sma_max / (N_sma_max - 2)) 
                         lt=group['lr'] * math.sqrt((1 - beta2_t)/(1 - beta1 ** state['step'])
                         dfc=1
                         if rt>=0.99:
