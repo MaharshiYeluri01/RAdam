@@ -115,6 +115,7 @@ class DRAdam(Optimizer):
                 else:
                     state['exp_avg'] = state['exp_avg'].type_as(p_data_fp32)
                     state['exp_avg_sq'] = state['exp_avg_sq'].type_as(p_data_fp32)
+                    state['previous_grad'] = state['previous_grad'].type_as(p_data_fp32)
 
                 exp_avg, exp_avg_sq,previous_grad = state['exp_avg'], state['exp_avg_sq'],state['previous_grad']
                 beta1, beta2 = group['betas']
@@ -155,7 +156,7 @@ class DRAdam(Optimizer):
                         step_size=rt*lt
                         
                         
-                        state['previous_grad'] = p_data_fp32.clone()
+                        state['previous_grad'] = grad.clone()
                     else:
                         step_size = group['lr'] / (1 - beta1 ** state['step'])
                     buffered[2] = step_size
