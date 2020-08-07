@@ -135,15 +135,16 @@ class DRAdam(Optimizer):
 
                     # more conservative since it's an approximated value
                     if N_sma >= 5:
-                        state['previous_grad'] = p_data_fp32.clone()
+                        
                         lt=math.sqrt((1 - beta2_t) / (1 - beta1 ** state['step']))
                         rt= math.sqrt( (N_sma - 4) / (N_sma_max - 4) * (N_sma - 2) / N_sma * N_sma_max / (N_sma_max - 2)) 
                         dfc=1
                         if rt==1:
                             diff = torch.abs(previous_grad - p_data_fp32)
                             dfc = torch.div(1.0, (1.0 + torch.exp(-diff)))
-                            
+                        if state['step']%100==0:print('RT',rt,'DFC',dfc)   
                         step_size=rt*lt*dfc
+                        state['previous_grad'] = p_data_fp32.clone()
                     else:
                         step_size = group['lr'] / (1 - beta1 ** state['step'])
                     buffered[2] = step_size
